@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigationRoot"
+    app:startDestination="@id/navigationRootMenuScreen">
+
+    <fragment
+        android:id="@+id/navigationRootMenuScreen"
+        android:name="ru.github.pavelannin.sample.presentation.screen.menu.MenuFragment"
+        android:label="OneWay"
+        tools:layout="@layout/fragment_menu">
+
+        <action
+            android:id="@+id/navigationRootMenuToCounterAction"
+            app:destination="@id/navigationRootCounterScreen" />
+
+        <action
+            android:id="@+id/navigationRootMenuToPaginationAction"
+            app:destination="@id/navigationRootPaginationScreen" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigationRootCounterScreen"
+        android:name="ru.github.pavelannin.sample.presentation.screen.counter.CounterFragment"
+        android:label="OneWay: Counter"
+        tools:layout="@layout/fragment_counter" />
+
+    <fragment
+        android:id="@+id/navigationRootPaginationScreen"
+        android:name="ru.github.pavelannin.sample.presentation.screen.pagination.PaginationFragment"
+        android:label="OneWay: Pagination"
+        tools:layout="@layout/fragment_pagination" />
+
+</navigation>

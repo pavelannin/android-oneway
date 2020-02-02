@@ -1,0 +1,3 @@
+rootProject.name = 'OneWay'
+
+include ':sample', ':library', ':library-lifecycle'
