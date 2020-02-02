@@ -1,0 +1,36 @@
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+
+version = '0.1.0'
+group = 'com.github.pavelannin'
+project.archivesBaseName = artifact
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    // User and ApiKey stored in local.properties
+    user = properties.getProperty("bintrayUser")
+    key = properties.getProperty("bintrayApiKey")
+    configurations = ['archives']
+
+    pkg {
+        repo = 'android'
+        name = bintrayName
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/pavelannin/android-oneway'
+        publish = true
+    }
+}
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            packaging 'jar'
+            groupId 'com.github.pavelannin'
+            artifactId artifact
+        }
+    }
+}
+
+bintrayUpload.dependsOn install

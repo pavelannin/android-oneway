@@ -1,6 +1,11 @@
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
 
+ext {
+    bintrayName = 'oneway'
+    artifact = 'oneway'
+}
+
 sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
     test.java.srcDirs += 'src/test/kotlin'
@@ -16,4 +21,20 @@ dependencies {
     implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.2.16'
     implementation group: 'io.reactivex.rxjava2', name: 'rxandroid', version: '2.1.1'
     implementation group: 'io.reactivex.rxjava2', name: 'rxkotlin', version: '2.4.0'
+}
+
+apply from: "${rootDir}/gradle/bintray.gradle"
+
+task sourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    from sourceSets.main.java.srcDirs
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    archiveClassifier.set('javadoc')
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
 }
