@@ -1,23 +1,20 @@
-package ru.github.pavelannin.oneway.lifecycle
+package ru.github.pavelannin.sample.common.extensions
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.Transformations
+import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import io.reactivex.subjects.UnicastSubject
 
-fun <Input, Output> LiveData<Input>.map(
-    transform: (Input) -> Output
-): LiveData<Output> = Transformations.map(this, transform)
-
-fun <Input, Output> LiveData<Input>.switchMap(
-    transform: (Input) -> LiveData<Output>
-): LiveData<Output> = Transformations.switchMap(this, transform)
-
-fun <T> LiveData<T>.distinctUntilChanged(): LiveData<T> = Transformations.distinctUntilChanged(this)
+fun <T> Observable<T>.subscribe(liveData: MutableLiveData<T>): Disposable {
+    return subscribe { value -> liveData.postValue(value) }
+}
 
 fun <T> LiveData<T>.filter(predicate: (T) -> Boolean): LiveData<T> {
     return MediatorLiveData<T>().also { filterLiveData ->
@@ -29,6 +26,10 @@ fun <T> LiveData<T>.filter(predicate: (T) -> Boolean): LiveData<T> {
     }
 }
 
+fun <T> LiveData<T>.filterNot(predicate: (T) -> Boolean): LiveData<T> {
+    return filter { predicate.invoke(it).not() }
+}
+
 fun <Input, Output> LiveData<Input>.map(
     transform: (Input) -> Output,
     scheduler: Scheduler = Schedulers.computation()
@@ -36,7 +37,7 @@ fun <Input, Output> LiveData<Input>.map(
     return object : LiveData<Output>(), Observer<Input> {
 
         private var disposable: Disposable? = null
-        private val viewStateSubject: UnicastSubject<Input> by lazy { UnicastSubject.create<Input>() }
+        private val viewStateSubject: Subject<Input> by lazy { PublishSubject.create<Input>() }
 
         override fun onActive() {
             super.onActive()

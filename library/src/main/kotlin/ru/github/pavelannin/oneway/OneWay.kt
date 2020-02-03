@@ -12,7 +12,7 @@ object OneWay
 @Suppress(names = ["unused"])
 fun <State, Action> OneWay.create(
     initialState: State,
-    actionSubjects: List<Subject<out Action>>,
+    actionSubjects: Iterable<Subject<out Action>>,
     reducer: Reducer<Action, State>,
     scheduler: Scheduler = Schedulers.computation()
 ): Observable<State> = Observable.defer {

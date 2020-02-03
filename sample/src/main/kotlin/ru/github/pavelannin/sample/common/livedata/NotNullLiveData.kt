@@ -1,9 +1,9 @@
-package ru.github.pavelannin.oneway.lifecycle
+package ru.github.pavelannin.sample.common.livedata
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 
-class NotNullMediatorLiveData<T> internal constructor() : MediatorLiveData<T>()
+class NotNullMediatorLiveData<T> : MediatorLiveData<T>()
 
 fun <T> LiveData<T?>.filterNotNull(): NotNullMediatorLiveData<T> {
     return NotNullMediatorLiveData<T>().also { notNullLiveData ->

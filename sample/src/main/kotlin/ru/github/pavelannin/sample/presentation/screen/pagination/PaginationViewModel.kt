@@ -14,9 +14,9 @@ import io.reactivex.subjects.UnicastSubject
 import ru.github.pavelannin.oneway.OneWay
 import ru.github.pavelannin.oneway.Transformation
 import ru.github.pavelannin.oneway.create
-import ru.github.pavelannin.oneway.lifecycle.subscribe
+import ru.github.pavelannin.sample.common.extensions.subscribe
 import ru.github.pavelannin.oneway.reduceWithState
-import ru.github.pavelannin.oneway.transformation
+import ru.github.pavelannin.oneway.transform
 import java.util.concurrent.TimeUnit
 
 class PaginationViewModel(
@@ -60,7 +60,7 @@ class PaginationViewModel(
     private fun fetchData(oldState: State): Observable<Transformation<State>> {
         return api.anotherRequest(oldState.nextPage)
             .map { range ->
-                transformation<State> { state ->
+                transform<State> { state ->
                     state.copy(
                         data = state.data.plus(range.toList()),
                         nextPage = state.nextPage.inc(),
@@ -69,10 +69,10 @@ class PaginationViewModel(
                 }
             }
             .onErrorReturn { error ->
-                transformation { state -> state.copy(loadingStatus = State.Response.Failure(error)) }
+                transform { state -> state.copy(loadingStatus = State.Response.Failure(error)) }
             }
             .toObservable()
-            .startWith(transformation { state -> state.copy(loadingStatus = State.Response.Loading()) })
+            .startWith(transform { state -> state.copy(loadingStatus = State.Response.Loading()) })
     }
 
     private interface Action

@@ -8,9 +8,9 @@ import io.reactivex.subjects.Subject
 import io.reactivex.subjects.UnicastSubject
 import ru.github.pavelannin.oneway.OneWay
 import ru.github.pavelannin.oneway.create
-import ru.github.pavelannin.oneway.lifecycle.subscribe
+import ru.github.pavelannin.sample.common.extensions.subscribe
 import ru.github.pavelannin.oneway.syncReduce
-import ru.github.pavelannin.oneway.transformation
+import ru.github.pavelannin.oneway.transform
 
 class CounterViewModel : ViewModel() {
 
@@ -26,8 +26,8 @@ class CounterViewModel : ViewModel() {
             actionSubject = actionSubject,
             reducer = syncReduce { action ->
                 when (action) {
-                    Action.Increment -> transformation { state -> state.copy(count = state.count.inc()) }
-                    Action.Decrement -> transformation { state -> state.copy(count = state.count.dec()) }
+                    Action.Increment -> transform { state -> state.copy(count = state.count.inc()) }
+                    Action.Decrement -> transform { state -> state.copy(count = state.count.dec()) }
                 }
             }
         )

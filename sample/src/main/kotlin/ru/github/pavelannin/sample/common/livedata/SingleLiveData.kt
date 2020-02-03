@@ -1,4 +1,4 @@
-package ru.github.pavelannin.oneway.lifecycle
+package ru.github.pavelannin.sample.common.livedata
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
