@@ -20,6 +20,10 @@
             android:id="@+id/navigationRootMenuToPaginationAction"
             app:destination="@id/navigationRootPaginationScreen" />
 
+        <action
+            android:id="@+id/navigationRootMenuToDynamicAnimationAction"
+            app:destination="@id/navigationRootDynamicAnimation" />
+
     </fragment>
 
     <fragment
@@ -33,5 +37,11 @@
         android:name="ru.github.pavelannin.sample.presentation.screen.pagination.PaginationFragment"
         android:label="OneWay: Pagination"
         tools:layout="@layout/fragment_pagination" />
+
+    <fragment
+        android:id="@+id/navigationRootDynamicAnimation"
+        android:name="ru.github.pavelannin.sample.presentation.screen.dynamic_animation.DynamicAnimationFragment"
+        android:label="OneWay: Dynamic Animation"
+        tools:layout="@layout/fragment_dynamic_animation" />
 
 </navigation>

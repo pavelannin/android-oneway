@@ -16,7 +16,7 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.navigationState.observe(owner = this) { direction -> findNavController().navigate(direction) }
+        viewModel.navigationState.observe(owner = this) { action -> findNavController().navigate(action.consume()) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,6 +28,10 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
 
         fragmentMenuPaginationButton.clicks()
             .map { MenuViewModel.Action.PaginationPressed }
+            .subscribe(viewModel.actionSubject)
+
+        fragmentMenuDynamicAnimationButton.clicks()
+            .map { MenuViewModel.Action.DynamicAnimationPressed }
             .subscribe(viewModel.actionSubject)
     }
 }

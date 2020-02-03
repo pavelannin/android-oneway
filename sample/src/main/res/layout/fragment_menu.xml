@@ -35,6 +35,13 @@
                 android:text="Pagination"
                 tools:ignore="HardcodedText" />
 
+            <Button
+                android:id="@+id/fragmentMenuDynamicAnimationButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dynamic animation"
+                tools:ignore="HardcodedText" />
+
         </LinearLayout>
 
     </ScrollView>
